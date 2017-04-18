@@ -27,7 +27,7 @@ CLASSPATH="${CLASSPATH:-}:${installdir}/lib/*:${installdir}/extlib/*"
 
 HADOOP_HOME=${HADOOP_HOME:""}  # needed for set -o nounset aove
 
-if [ "$HADOOP_HOME" != "" ]; then
+if [ "$HADOOP_HOME" !=-"" ]; then
   echo "Using Hadoop from $HADOOP_HOME"
   CLASSPATH="${CLASSPATH}:${HADOOP_HOME}/conf:${HADOOP_HOME}/*"
   JAVA_LIB_PATH="-Djava.library.path=$HADOOP_HOME/lib/native/Linux-amd64-64"
@@ -35,13 +35,13 @@ else
   echo "Error: HADOOP_HOME is not set. Hadoop job types will not run properly."
 fi
 
-HIVE_HOME=${HIVE_HOME:""}  # Needed for set -o nounset above
+HIVE_HOME=${HIVE_HOME:-""}  # Needed for set -o nounset above
 if [ "$HIVE_HOME" != "" ]; then
   echo "Using Hive from $HIVE_HOME"
   CLASSPATH="${CLASSPATH}:${HIVE_HOME}/conf:${HIVE_HOME}/lib/*"
 fi
 
-CLASSPATH=${CLASSPATH:""}  # Needed for set -o nounset above
+CLASSPATH=${CLASSPATH:-""}  # Needed for set -o nounset above
 echo "CLASSPATH: ${CLASSPATH}";
 
 executorport=$(grep executor.port "${conf}/azkaban.properties" | cut -d = -f 2)
